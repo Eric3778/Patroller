@@ -30,6 +30,14 @@ public class PatrollerController : MonoBehaviour
         if (curr_target != patroller.transform.position)
         {
             patroller.transform.position = Vector3.MoveTowards(patroller.transform.position, curr_target, 1f * Time.deltaTime);
+            Vector3 direction = curr_target - patroller.transform.position;
+            if (direction.x != 0 || direction.z != 0)
+            {
+                Vector3 v = new Vector3(direction.x, 0, direction.z);
+                Quaternion rotation = Quaternion.LookRotation(v);
+                if (patroller.transform.rotation != rotation)
+                    patroller.transform.rotation = Quaternion.Slerp(patroller.transform.rotation, rotation, Time.fixedDeltaTime * 5);
+            }
         }
         else
         {

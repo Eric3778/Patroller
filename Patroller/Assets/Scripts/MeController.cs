@@ -31,6 +31,12 @@ public class MeController : MonoBehaviour
         Rigidbody playerRigidbody = me.GetComponent<Rigidbody>();
         playerRigidbody.freezeRotation = true;
         playerRigidbody.MovePosition(me.transform.position + velocity * Time.deltaTime * 2);
+        if (x != 0 || z != 0)
+        {
+            Quaternion rotation = Quaternion.LookRotation(-velocity);
+            if (me.transform.rotation != rotation)
+                me.transform.rotation = Quaternion.Slerp(me.transform.rotation, rotation, Time.fixedDeltaTime * 5);
+        }
 
         int curr_zone = 0;
         if (me.transform.position.x <= 0f)
